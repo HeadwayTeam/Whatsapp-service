@@ -19,7 +19,7 @@ app.post('/api/webhook', async (req, res) => {
 
     if (!userState[from]) {
         // Initial message
-        if (incomingMessage === 'hi' || incomingMessage === 'hello') {
+        if (incomingMessage === 'hi' || incomingMessage === 'hello' || incomingMessage === 'hey') {
             userState[from] = { step: 'initial' };
             sendMessage(from, 'Hello, welcome to FindApp! What are you looking for?\nA] WORKING PROFESSIONALS\nB] WORK');
         }
@@ -65,10 +65,16 @@ app.post('/api/webhook', async (req, res) => {
 function sendMessage(to, message) {
     client.messages.create({
         body: message,
-        from: 'whatsapp:+14155238886', // Your Twilio WhatsApp Sandbox number
+        from: 'whatsapp:+14155238886', // Twilio WhatsApp Sandbox number
         to: to
     });
 }
+
+const PORT = process.env.PORT || 3001;
+
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+});
 
 // Export the Express app as a serverless function
 module.exports = app;
